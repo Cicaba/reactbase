@@ -12,7 +12,8 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import { Provider } from "react-redux";
 import store from "../store/store";
-
+import axios from "@/plugins/axiosConfig";
+window.axios = axios;
 /**
  * 定义应用路
  */
