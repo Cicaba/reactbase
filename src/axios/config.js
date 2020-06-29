@@ -1,7 +1,7 @@
 import Axios from 'axios';
+import axiosJsonp from '../plugins/axiosJsonp';
 // import { Notify } from 'vant';
 let Notify = () => {};
-import axiosJsonp from '@/plugins/axiosJsonp';
 let open = [];
 let off = [];
 Axios.interceptors.request.use(config => {
@@ -65,7 +65,7 @@ Axios.interceptors.response.use(
           Notify({ type: 'warning', message: '请求的网页已临时移动到新位置!' });
           break;
         case 401:
-          location.hash = '/login';
+          window.location.hash = '/login';
           Notify({ type: 'warning', message: '登录过期，请重新登录！' });
           // store.commit('setPwd', null);
           loadingDisplay();
@@ -98,7 +98,7 @@ Axios.interceptors.response.use(
       loading(false, error.config.url);
       return Promise.reject(error); // 返回接口返回的错误信息
     } else {
-      location.hash = '/login';
+      window.location.hash = '/login';
       Notify({ type: 'danger', message: '你与世界已经断开联系...' });
       loadingDisplay();
     }
@@ -144,13 +144,13 @@ function loading(isadded, url) {
   if (isadded) {
     open.push(url);
     if (open.length === 1) {
-      store.commit('setLoading', true);
+      // store.commit('setLoading', true);
     }
   } else {
     off.push(url);
     setTimeout(() => {
       if (open.length && open.length === off.length) {
-        store.commit('setLoading', false);
+        // store.commit('setLoading', false);
         off = [];
         open = [];
       }

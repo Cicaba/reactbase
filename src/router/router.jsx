@@ -66,6 +66,7 @@ function renderRouterConfigV4(container, router, contextPath) {
     if (routeItem.layout && routeItem.component) {
       routeChildren.push(
         <ReuteType
+          className="CacheRoute"
           key={routePath}
           exact
           path={routePath}
@@ -78,6 +79,7 @@ function renderRouterConfigV4(container, router, contextPath) {
       // 使用上层节点作为 container
       routeChildren.push(
         <ReuteType
+          className="CacheRoute"
           key={routePath}
           params={{ is: true }}
           exact
@@ -88,7 +90,7 @@ function renderRouterConfigV4(container, router, contextPath) {
         />
       );
     } else {
-      routeChildren.push(<ReuteType key={routePath} {...routeItem.params} exact path={routePath} component={routeItem.component} />);
+      routeChildren.push(<ReuteType className="CacheRoute" key={routePath} {...routeItem.params} exact path={routePath} component={routeItem.component} />);
     }
 
     // 存在子路由，递归当前路径，并添加到路由中
@@ -112,7 +114,7 @@ export default (
   <PersistGate loading={null} persistor={persistor}>
     <Provider store={store}>
       <Router>
-        <div> {routeChildren} </div>
+        <div className="Router"> {routeChildren} </div>
       </Router>
     </Provider>
   </PersistGate>

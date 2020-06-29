@@ -1,11 +1,11 @@
-import defaultState from './state'
+import defaultState from './state';
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case 'screenWidth':
-      return { ...state, screenWidth: action.data };
-    case 'screenHeight':
-      return { ...state, screenHeight: action.data };
+    case 'clientWidth':
+      return { ...state, clientWidth: action.data };
+    case 'clientHeight':
+      return { ...state, clientHeight: action.data };
     default:
       return state;
   }
-}
+};

@@ -1,5 +1,5 @@
 //默认state
 export default {
-  screenWidth: '100%',
-  screenHeight: '100%',
-}
+  clientWidth: '100%',
+  clientHeight: '100%'
+};

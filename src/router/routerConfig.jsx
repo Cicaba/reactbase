@@ -10,22 +10,17 @@ import asyncComponent from "../components/AsyncComponent";
 const routerConfig = [
   {
     path: "/",
-    component: asyncComponent(import(/* webpackChunkName: 'base' */ "../App")),
+    component: asyncComponent(import(/* webpackChunkName: 'base' */ "../view/nav")),
     params: {
+      name: "首页",
       buffer: true
     },
     children: [
       {
         path: "/index",
-        component: asyncComponent(import(/* webpackChunkName: 'base' */ "../view/text")),
+        component: asyncComponent(import(/* webpackChunkName: 'base' */ "../view/index")),
         params: {
-          buffer: true
-        }
-      },
-      {
-        path: "/found",
-        component: asyncComponent(import(/* webpackChunkName: 'base' */ "../view/found")),
-        params: {
+          name: "首页",
           buffer: true
         }
       }

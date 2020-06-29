@@ -1,0 +1,74 @@
+#root, .CacheRoute {
+  height: 100%;
+}
+.mainContent {
+  padding: 0.5rem;
+  overflow-y: auto;
+}
+.sky-loading-box {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9998;
+  width: 100%;
+  height: 100%;
+  top: 0;
+}
+.msg-box {
+  position: absolute;
+  z-index: 9999;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  width: 6rem;
+  height: 6rem;
+}
+::-webkit-scrollbar {
+  width: 1px;
+  height: 2px;
+}
+::-webkit-scrollbar-thumb:vertical {
+  height: 5px;
+  background-color: rgba(151, 168, 190, .5);
+  /* transition: opacity 120ms ease-out; */
+  -webkit-border-radius: 1px;
+}
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 1px;
+  background-color: rgba(151, 168, 190, .5);
+}
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+.txt-lt {
+  text-align: left;
+}
+.txt-ct {
+  text-align: center;
+}
+.txt-rt {
+  text-align: right;
+}
+.link {
+  color: #409eff;
+}
+.colorRed {
+  color: #f00;
+}
+.flex-around {
+  display: flex;
+  justify-content: space-around;
+}
+.align-center {
+  display: flex;
+  align-items: center;
+}
+.flex-start {
+  display: flex;
+  justify-content: flex-start;
+}
+.height100 {
+  height: 100%;
+}

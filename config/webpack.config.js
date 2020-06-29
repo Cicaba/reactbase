@@ -509,7 +509,7 @@ module.exports = function(webpackEnv) {
     plugins: [
       new webpack.DllReferencePlugin({
         context: process.cwd(),
-        manifest: require('../public/vendor/vendor-manifest.json')
+        manifest: require(paths.appPublic + '/vendor/vendor-manifest.json')
       }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
