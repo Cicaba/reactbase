@@ -10,7 +10,7 @@ import asyncComponent from "../components/AsyncComponent";
 const routerConfig = [
   {
     path: "/",
-    component: asyncComponent(import(/* webpackChunkName: 'base' */ "../containers/app")),
+    component: asyncComponent(import(/* webpackChunkName: 'base' */ "../App")),
     params: {
       buffer: true
     },

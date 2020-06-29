@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
+import { connect } from "react-redux";
 import CacheRoute from "react-router-cache-route";
-// import history from "./components/history";
-export default class App extends Component {
+
+class App extends Component {
   constructor(props) {
     super(props);
     if (this.props.match.path == "/") {
@@ -27,3 +28,14 @@ export default class App extends Component {
     );
   }
 }
+export default connect(
+  (state, ownProps) => {
+    return state;
+  },
+  (dispatch) => {
+    return {
+      setWidth: () => dispatch("screenWidth"),
+      setHeight: () => dispatch("screenHeight")
+    };
+  }
+)(App);
