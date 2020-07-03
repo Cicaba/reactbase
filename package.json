@@ -159,5 +159,6 @@
     "react-app-rewired": "^2.1.6",
     "react-scripts": "^3.4.1",
     "webpack-cli": "^3.3.12"
-  }
+  },
+  "proxy": "http://47.99.50.220:8081"
 }

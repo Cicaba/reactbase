@@ -1,0 +1,27 @@
+.self {
+  .head {
+    padding: 2rem;
+    margin-bottom: 0.8rem;
+    background: #fff;
+    display: flex;
+    .headImg {
+      margin-right: 2rem;
+      img {
+        width: 6rem;
+        height: 6rem;
+        border-radius: 10%;
+      }
+    }
+    .headText {
+      padding: 1rem 0;
+      p:nth-of-type(1) {
+        font-size: 1.6rem;
+        font-weight: 900;
+      }
+      p:nth-of-type(2) {
+        margin-top: 1rem;
+        font-size: 1.2rem;
+      }
+    }
+  }
+}

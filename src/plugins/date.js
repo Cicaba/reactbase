@@ -13,7 +13,7 @@ export const newDate = str => {
  * @returns 格式化后的时间
  */
 const formatDate = (str, fmt) => {
-  if (!new Boolean(str) || str === null || str === undefined) {
+  if (!new Boolean(str) || str === "" || str === null || str === undefined) {
     return "";
   }
   const now = newDate(str);
@@ -30,11 +30,11 @@ const formatDate = (str, fmt) => {
     "S": now.getMilliseconds() // 毫秒
   };
   if (/(y+)/.test(fmt)) {
-    fmt = fmt.replace(RegExp.$1, (now.getFullYear() + "").substr(4 - RegExp.$1.length));
+    fmt = fmt.replace(RegExp.$1, (String(now.getFullYear())).substr(4 - RegExp.$1.length));
   }
   for (let k in o) {
     if (new RegExp("(" + k + ")").test(fmt)) {
-      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr((String(o[k])).length)));
     }
   }
   return fmt;

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 let asyncComponent = (cmp) => {
   return class extends Component {
     constructor(props) {

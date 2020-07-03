@@ -11,16 +11,30 @@ class Nav extends Component {
       this.props.history.replace("/index");
     }
   }
+  LeftClick() {
+    this.props.history.goBack();
+  }
   render() {
     let ReuteType = this.props.buffer ? CacheRoute : Route;
     return (
       <div className="Nav">
-        <NavBar mode="light" icon={<Icon type="left" />}>
+        <NavBar
+          onLeftClick={() => {
+            this.LeftClick();
+          }}
+          rightContent={this.props.rightContent}
+          mode="light"
+          icon={<Icon type="left" />}
+        >
           {this.props.name}
         </NavBar>
-        <div className="mainContent" style={{ height: this.props.clientHeight - 45 + "px" }}>
-          <ReuteType className="CacheRoute" path={this.props.match.url} render={() => (this.props.children ? this.props.children : "")}></ReuteType>
-        </div>
+        {this.props.children ? (
+          <div className="mainContent" style={{ height: this.props.clientHeight - 45 + "px" }}>
+            <ReuteType className="CacheRoute" path={this.props.match.url} render={() => (this.props.children ? this.props.children : "")}></ReuteType>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     );
   }

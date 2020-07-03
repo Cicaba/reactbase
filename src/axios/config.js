@@ -1,7 +1,10 @@
 import Axios from 'axios';
 import axiosJsonp from '../plugins/axiosJsonp';
-// import { Notify } from 'vant';
-let Notify = () => {};
+import loading from '@/components/loading';
+import { Toast } from 'antd-mobile';
+import store from "@/store/store.js";
+console.log(store.getState());
+
 let open = [];
 let off = [];
 Axios.interceptors.request.use(config => {
@@ -10,16 +13,18 @@ Axios.interceptors.request.use(config => {
     // config.headers.Authorization = token;
     // config.headers = { 'Access-Control-Allow-Origin': '*' };
     //测试环境
+    let token = store.getState().user.accessToken;
+    config.headers.Authorization = "Bearer " + token;
     config.baseURL = process.env.NODE_ENV === 'development' ? '/' : '/';
 
     config.withCredentials = true; // 允许携带cookie
     config.timeout = 30000; // 请求的超时时间
-    loading(true, config.url);
+    queue(true, config.url);
     // store.commit('setLoading', true);
     return config;
   },
   error => {
-    loading(true, error.url);
+    queue(true, error.url);
     return Promise.reject(error);
   });
 Axios.interceptors.response.use(
@@ -27,79 +32,75 @@ Axios.interceptors.response.use(
     let data = response.data;
     switch (response.status) {
       case 200:
-        if (data.exception && !data.success) {
-          Notify({ type: 'danger', message: data.message });
-          loading(false, response.config.url);
-          return Promise.reject(response);
-        }
         if (!data.success) {
-          Notify({ type: 'danger', message: data.message });
-          loading(false, response.config.url);
+          Toast.fail(data.message);
+          queue(false, response.config.url);
           return Promise.reject(response);
+        } else if (data.result && Array.isArray(data.result.items) && !data.result.items.length) {
+          Toast.offline("无数据!!!", 1);
         }
         break;
       case 204:
-        Notify({ type: 'warning', message: '服务器成功处理了请求，但没有返回任何内容!' });
-        break;
+        Toast.fail('服务器成功处理了请求，但没有返回任何内容!');
+        return Promise.reject(response);
     }
     // store.commit('setLoading', false);
     try {
-      loading(false, response.config.url);
+      queue(false, response.config.url);
     } catch (error) {
-      loading(false, 'cicaba');
+      queue(false, 'cicaba');
     }
     return Promise.resolve(response);
   },
   error => {
+    let data;
     try {
-      var data = error.response.data;
+      data = error.response.data;
     } catch (error) {
-      loading(false, 'cicaba');
+      queue(false, 'cicaba');
     }
     if (error.response) {
       switch (error.response.status) {
         case 301:
-          Notify({ type: 'warning', message: '请求的网页已永久移动到新位置!' });
+          Toast.fail('请求的网页已永久移动到新位置!');
           break;
         case 302:
-          Notify({ type: 'warning', message: '请求的网页已临时移动到新位置!' });
+          Toast.fail('请求的网页已临时移动到新位置!');
           break;
         case 401:
-          window.location.hash = '/login';
-          Notify({ type: 'warning', message: '登录过期，请重新登录！' });
-          // store.commit('setPwd', null);
+          window.location.href = '/login';
+          Toast.fail('登录过期，请重新登录！');
           loadingDisplay();
           break;
         case 404:
-          Notify({ type: 'danger', message: '请求接口不存在！' });
+          Toast.fail('请求接口不存在！');
           break;
         case 408:
-          Notify({ type: 'danger', message: '服务器等候请求时发生超时' });
+          Toast.fail('服务器等候请求时发生超时');
           break;
         case 410:
-          Notify({ type: 'danger', message: '资源以被删除' });
+          Toast.fail('资源以被删除');
           break;
         case 413:
-          Notify({ type: 'danger', message: '请求实体过大，超出服务器的处理能力!' });
+          Toast.fail('请求实体过大，超出服务器的处理能力!');
           break;
         case 415:
-          Notify({ type: 'danger', message: '请求的URI过长，服务器无法处理!' });
+          Toast.fail('请求的URI过长，服务器无法处理!');
           break;
         case 500:
           if (!data.success) {
-            Notify({ type: 'danger', message: data.message });
+            Toast.fail(data.error.message);
           }
           break;
         case 503:
-          Notify({ type: 'danger', message: '服务不可用0.0！' });
+          Toast.fail('服务不可用0.0！');
           break;
       }
       // store.commit('setLoading', false);
-      loading(false, error.config.url);
+      queue(false, error.config.url);
       return Promise.reject(error); // 返回接口返回的错误信息
     } else {
-      window.location.hash = '/login';
-      Notify({ type: 'danger', message: '你与世界已经断开联系...' });
+      window.location.href = '/login';
       loadingDisplay();
     }
   });
@@ -134,23 +135,23 @@ Axios.file = (url, file, ) => {
 export default Axios;
 
 function loadingDisplay() {
-  let els = document.getElementsByClassName('sky-loading-box');
+  let els = document.getElementsByClassName('sky-queue-box');
   for (let i = 0, length = els.length; i < length; i++) {
     els[i].style.display = 'none';
   }
 }
 
-function loading(isadded, url) {
+function queue(isadded, url) {
   if (isadded) {
     open.push(url);
     if (open.length === 1) {
-      // store.commit('setLoading', true);
+      loading.show();
     }
   } else {
     off.push(url);
     setTimeout(() => {
       if (open.length && open.length === off.length) {
-        // store.commit('setLoading', false);
+        loading.hide();
         off = [];
         open = [];
       }

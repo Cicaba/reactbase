@@ -1,0 +1,17 @@
+.Curriculum {
+  .CurriculumTable {
+    width: 100%;
+    border: 1px solid #666;
+    border-collapse: collapse;
+    td, th {
+      padding: 0.3rem 0;
+      text-align: center;
+      border: 1px solid #666;
+      border-collapse: collapse;
+    }
+    th {
+      font-weight: 900;
+      background-color: #ccc;
+    }
+  }
+}

@@ -12,6 +12,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import { Provider } from "react-redux";
 import store from "../store/store";
+
 /**
  * 定义应用路
  */
@@ -81,7 +82,6 @@ function renderRouterConfigV4(container, router, contextPath) {
         <ReuteType
           className="CacheRoute"
           key={routePath}
-          params={{ is: true }}
           exact
           path={routePath}
           render={(props) => {
