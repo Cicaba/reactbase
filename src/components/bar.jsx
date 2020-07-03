@@ -10,7 +10,7 @@ class Bar extends Component {
   navClick(n) {
     this.props.setSelectedNav(n);
     if (n === 0) {
-      this.props.history.replace("/index");
+      this.props.history.replace("/home");
     } else {
       this.props.history.replace("/self");
     }

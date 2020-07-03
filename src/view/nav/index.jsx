@@ -8,7 +8,7 @@ class Nav extends Component {
   constructor(props) {
     super(props);
     if (this.props.match.path === "/") {
-      this.props.history.replace("/index");
+      this.props.history.replace("/home");
     }
   }
   LeftClick() {

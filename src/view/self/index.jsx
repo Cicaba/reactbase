@@ -67,7 +67,7 @@ class Self extends Component {
             版本
           </List.Item>
         </List>
-        <Button onClick={() => this.logout()} type="warning" style={{ margin: ".8rem 0" }}>
+        <Button onClick={() => this.logout()} type="warning" style={{ margin: ".8rem auto", width: "90%" }}>
           注 销
         </Button>
       </div>

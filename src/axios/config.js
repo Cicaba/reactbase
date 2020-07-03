@@ -4,23 +4,28 @@ import loading from '@/components/loading';
 import { Toast } from 'antd-mobile';
 import store from "@/store/store.js";
 console.log(store.getState());
-
 let open = [];
 let off = [];
 Axios.interceptors.request.use(config => {
     //这里写死一个token，你需要在这里取到你设置好的token的值
     // 这里将token设置到headers中，header的key是Authorization，这个key值根据你的需要进行修改即可
     // config.headers.Authorization = token;
-    // config.headers = { 'Access-Control-Allow-Origin': '*' };
+    // config.headers = {
+    //   'Access-Control-Allow-Origin': '*',
+    //   "Content-Type": "application/json; charset=utf-8"
+    // };
     //测试环境
+
     let token = store.getState().user.accessToken;
-    config.headers.Authorization = "Bearer " + token;
+    if (config.url.includes("Login") || config.url.includes("WeixinBinding")) {
+      token = null;
+    }
+    token && (config.headers.Authorization = "Bearer " + token);
     config.baseURL = process.env.NODE_ENV === 'development' ? '/' : '/';
 
     config.withCredentials = true; // 允许携带cookie
     config.timeout = 30000; // 请求的超时时间
     queue(true, config.url);
-    // store.commit('setLoading', true);
     return config;
   },
   error => {
@@ -70,7 +75,6 @@ Axios.interceptors.response.use(
         case 401:
           window.location.href = '/login';
           Toast.fail('登录过期，请重新登录！');
-          loadingDisplay();
           break;
         case 404:
           Toast.fail('请求接口不存在！');
@@ -99,9 +103,6 @@ Axios.interceptors.response.use(
       // store.commit('setLoading', false);
       queue(false, error.config.url);
       return Promise.reject(error); // 返回接口返回的错误信息
-    } else {
-      window.location.href = '/login';
-      loadingDisplay();
     }
   });
 
@@ -133,13 +134,6 @@ Axios.file = (url, file, ) => {
   });
 };
 export default Axios;
-
-function loadingDisplay() {
-  let els = document.getElementsByClassName('sky-queue-box');
-  for (let i = 0, length = els.length; i < length; i++) {
-    els[i].style.display = 'none';
-  }
-}
 
 function queue(isadded, url) {
   if (isadded) {

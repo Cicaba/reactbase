@@ -11,23 +11,29 @@ class Index extends Component {
       code: ""
     };
   }
-  async componentWillMount() {
-    await this.getCode();
-    await this.getAjax();
+  componentWillMount() {
+    this.props.setSelectedNav(0);
+    this.getCode();
   }
   async getAjax() {
     if (!sessionStorage.login) {
-      await $axios.get("/api/services/Main/WeiXinService/Login?code=" + this.state.code).then((res) => {
-        sessionStorage.login = true;
-        let name;
-        try {
-          name = res.data.result.currentRole.name;
-        } catch (error) {
-          name = res.data.result.roles[0].name;
-        }
-        this.props.setRote(name);
-        this.props.setUser(res.data.result);
-      });
+      localStorage.clear();
+      await $axios
+        .get("/api/services/Main/WeiXinService/Login?code=" + this.state.code)
+        .then((res) => {
+          sessionStorage.login = true;
+          let name;
+          try {
+            name = res.data.result.currentRole.name;
+          } catch (error) {
+            name = res.data.result.roles[0].name;
+          }
+          this.props.setRote(name);
+          this.props.setUser(res.data.result);
+        })
+        .catch(() => {
+          this.props.history.replace("/login");
+        });
     }
 
     $axios.get("/api/services/Main/WeiXinService/GetCurUserTenants").then((res) => {
@@ -42,17 +48,28 @@ class Index extends Component {
     });
   }
   getCode() {
-    // this.setState({
-    //   code: "061F8gJP08xA4726WvIP0cA4JP0F8gJc"
-    // });
+    // this.setState(
+    //   {
+    //     code: "021EjklS1xYPb211hamS1M3ilS1Ejkle"
+    //   },
+    //   () => {
+    //     this.getAjax();
+    //   }
+    // );
+
     let code = new URL(location.href).searchParams.get("code");
     if (code) {
-      this.setState({
-        code: code
-      });
+      this.setState(
+        {
+          code: code
+        },
+        () => {
+          this.getAjax();
+        }
+      );
     } else {
       //微信认证
-      let direct_url = "http://jxtwx.tongzhichina.com/index";
+      let direct_url = "http://jxtwx.tongzhichina.com/home";
       let authUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa04936376f3b0e51&redirect_uri=${direct_url}&response_type=code&scope=snsapi_base&state=state#wechat_redirect`;
       window.location.href = authUrl;
     }
@@ -176,6 +193,7 @@ export default connect(
   (dispatch) => {
     return {
       setUser: (data) => dispatch({ type: "user", data }),
+      setSelectedNav: (data) => dispatch({ type: "selectedNav", data }),
       setRote: (data) => dispatch({ type: "rote", data }),
       setSchool: (data) => dispatch({ type: "school", data }),
       setEnum: (data) => dispatch({ type: "enum", data })

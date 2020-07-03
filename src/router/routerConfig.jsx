@@ -9,7 +9,7 @@ import asyncComponent from "../components/AsyncComponent";
 
 const routerConfig = [
   {
-    path: "/index",
+    path: "/home",
     component: asyncComponent(import(/* webpackChunkName: 'base' */ "../view/index")),
     params: {
       name: "首页",

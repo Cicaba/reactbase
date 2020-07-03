@@ -22,6 +22,7 @@ class Login extends Component {
     // this.setState({
     //   weixinAccCode: "021d5oeh0ynjUu1H9Lbh05I3eh0d5oeR"
     // });
+
     let code = new URL(location.href).searchParams.get("code");
     if (code) {
       this.setState({
@@ -84,7 +85,7 @@ class Login extends Component {
     };
     $axios.get("/api/services/Main/WeiXinService/WeixinBinding?" + $qs.stringify(data)).then((res) => {
       Toast.success("登陆成功!");
-      this.props.history.replace("/index");
+      this.props.history.replace("/home");
     });
   }
   render() {

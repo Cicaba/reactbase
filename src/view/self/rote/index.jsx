@@ -97,6 +97,9 @@ class School extends Component {
     }
     $axios.get("/api/services/Main/WeiXinService/ChangeRole?" + $qs.stringify(obj)).then(() => {
       Toast.success("操作成功!");
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.href = "http://jxtwx.tongzhichina.com/home";
     });
   }
   render() {
@@ -106,7 +109,7 @@ class School extends Component {
           <List.Item arrow="horizontal">选择角色</List.Item>
         </Picker>
         {this.picke()}
-        <Button onClick={() => this.submit()} style={{ marginTop: "1rem" }} type="primary">
+        <Button onClick={() => this.submit()} style={{ margin: "1rem auto", width: "90%" }} type="primary">
           提 交
         </Button>
       </div>
