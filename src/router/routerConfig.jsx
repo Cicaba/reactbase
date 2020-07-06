@@ -9,6 +9,32 @@ import asyncComponent from "../components/AsyncComponent";
 
 const routerConfig = [
   {
+    path: "/",
+    component: asyncComponent(import(/* webpackChunkName: 'base' */ "../view/nav")),
+    params: {
+      name: "首页",
+      buffer: false
+    },
+    children: [
+      {
+        path: "/self/school",
+        component: asyncComponent(import(/* webpackChunkName: 'base' */ "../view/self/school")),
+        params: {
+          name: "切换学校",
+          buffer: false
+        }
+      },
+      {
+        path: "/self/rote",
+        component: asyncComponent(import(/* webpackChunkName: 'base' */ "../view/self/rote")),
+        params: {
+          name: "切换角色",
+          buffer: false
+        }
+      }
+    ]
+  },
+  {
     path: "/home",
     component: asyncComponent(import(/* webpackChunkName: 'base' */ "../view/index")),
     params: {
@@ -77,32 +103,6 @@ const routerConfig = [
       name: "个人中心",
       buffer: true
     }
-  },
-  {
-    path: "/",
-    component: asyncComponent(import(/* webpackChunkName: 'base' */ "../view/nav")),
-    params: {
-      name: "首页",
-      buffer: false
-    },
-    children: [
-      {
-        path: "/self/school",
-        component: asyncComponent(import(/* webpackChunkName: 'base' */ "../view/self/school")),
-        params: {
-          name: "切换学校",
-          buffer: false
-        }
-      },
-      {
-        path: "/self/rote",
-        component: asyncComponent(import(/* webpackChunkName: 'base' */ "../view/self/rote")),
-        params: {
-          name: "切换角色",
-          buffer: false
-        }
-      }
-    ]
   },
   {
     path: "/login",

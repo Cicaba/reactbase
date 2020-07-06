@@ -132,8 +132,8 @@ class Index extends Component {
       },
       {
         name: "消费查询",
-        url: require("@/icons/entrust.svg"),
-        bgColor: "#4bb8f1",
+        url: require("@/icons/consumer.svg"),
+        bgColor: "#f60",
         route: "consumer",
         roles: ["parent"]
       },

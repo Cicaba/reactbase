@@ -12,6 +12,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import { Provider } from "react-redux";
 import store from "../store/store";
+import GuardRouter from "@/components/guardRouter";
 
 /**
  * 定义应用路
@@ -114,7 +115,7 @@ export default (
   <PersistGate loading={null} persistor={persistor}>
     <Provider store={store}>
       <Router>
-        <div className="Router"> {routeChildren} </div>
+        <GuardRouter route={routeChildren}></GuardRouter>
       </Router>
     </Provider>
   </PersistGate>
