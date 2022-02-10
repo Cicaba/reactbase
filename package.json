@@ -155,7 +155,7 @@
     "babel-plugin-import": "^1.13.0",
     "customize-cra": "^1.0.0",
     "eslint-plugin-html": "^6.0.2",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "react-app-rewired": "^2.1.6",
     "react-scripts": "^3.4.1",
     "webpack-cli": "^3.3.12"
